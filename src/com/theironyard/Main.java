@@ -7,7 +7,8 @@ import spark.template.mustache.MustacheTemplateEngine;
 import java.util.HashMap;
 
 public class Main {
-    static String name;
+
+    static User user;
 
     public static void main(String[] args) {
         Spark.init();
@@ -16,10 +17,10 @@ public class Main {
                 "/",
                 ((request, response) -> {
                     HashMap m = new HashMap();
-                    if(name == null) {
+                    if(user == null) {
                         return new ModelAndView(m, "login.html");
                     }else{
-                        m.put("name", name);
+                        m.put("name", user.name);
                         return new ModelAndView(m, "home.html");
                     }
                 }),
@@ -28,7 +29,8 @@ public class Main {
         Spark.post(
                 "/login",
                 ((request, response) -> {
-                    name = request.queryParams("loginName");
+                    String name = request.queryParams("loginName");
+                    user = new User(name);
                     response.redirect("/");
                     return "";
                 })
