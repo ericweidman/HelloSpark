@@ -57,8 +57,8 @@ public class Main {
                 session.invalidate();
                 response.redirect("/");
                 return"";
-            }
-        };
+            })
+        );
 
     }
 }
